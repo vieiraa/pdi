@@ -26,8 +26,6 @@ def rgb_to_yiq(image):
             yiq[j, i, 1] = (0.596*r - 0.274*g - 0.322*b)
             yiq[j, i, 2] = (0.211*r - 0.523*g + 0.312*b)
 
-    print("rgb to yiq convertion done")
-
     return yiq
 
 def yiq_to_rgb(yiq, width, height):
@@ -52,8 +50,6 @@ def yiq_to_rgb(yiq, width, height):
             rgb[j, i, 0] = r
             rgb[j, i, 1] = g
             rgb[j, i, 2] = b
-
-    print("yiq to rgb convertion done")
 
     return rgb
 
