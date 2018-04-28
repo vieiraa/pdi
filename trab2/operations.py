@@ -11,10 +11,10 @@ def cdf(i, hist):
     p = 0
     
     for j in range(len(keys)):
+        p += values[j]
+        
         if i == keys[j]:
             break
-        
-        p += values[j]
     
     return p
     
