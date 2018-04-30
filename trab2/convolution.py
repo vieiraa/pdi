@@ -20,7 +20,7 @@ def conv_pixel(image, x, y, matrix, out, flag_y):
                 gt += matrix[i, j]*image.getpixel((off_x, off_y))[1]
                 bt += matrix[i, j]*image.getpixel((off_x, off_y))[2]
             else:
-                rt += matrix[i,j]*image[j,i,0]
+                yt += matrix[i,j]*image[j,i,0]
     
     if not flag_y:
         rt = min(rt, 255)
@@ -34,6 +34,7 @@ def conv_pixel(image, x, y, matrix, out, flag_y):
         out[y, x, 0] = rt
         out[y, x, 1] = gt
         out[y, x, 2] = bt
+    
     else:
         yt = min(yt, 255)
         yt = max(yt, 0)
