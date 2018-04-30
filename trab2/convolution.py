@@ -40,11 +40,11 @@ def conv_pixel(image, x, y, matrix, out, flag_y):
         yt = max(yt, 0)
         out = [y, x, 0] = yt
     
-def conv_image(image, matrix):
+def conv_image(image, matrix, flag_y):
     out = np.zeros((image.height, image.width, 3), 'uint8')
     
     for y in range(1, image.height-1):
         for x in range(1, image.width-1):
-            conv_pixel(image, x, y, matrix, out)
+            conv_pixel(image, x, y, matrix, out, flag_y)
     
     return out
