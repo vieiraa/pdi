@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 
-def conv_pixel(image, x, y, matrix, out, flag_y):
+def conv_pixel(image, x, y, matrix, out, flag_y, offset):
     xc = int(len(matrix[0]) / 2)
     yc = int(len(matrix) / 2)
     
@@ -31,20 +31,25 @@ def conv_pixel(image, x, y, matrix, out, flag_y):
         gt = max(gt, 0)
         bt = max(bt, 0)
     
-        out[y, x, 0] = rt
-        out[y, x, 1] = gt
-        out[y, x, 2] = bt
+        out[y, x, 0] = rt + offset
+        out[y, x, 1] = gt + offset
+        out[y, x, 2] = bt + offset
     
     else:
         yt = min(yt, 255)
         yt = max(yt, 0)
-        out = [y, x, 0] = yt
+        out = [y, x, 0] = yt + offset
     
-def conv_image(image, matrix, flag_y):
-    out = np.zeros((image.height, image.width, 3), 'uint8')
+def conv_image(image, matrix, flag_y, offset):
+    out = ""
+    
+    if not flag_y:
+        out = np.zeros((image.height, image.width, 3), 'uint8')
+    else:
+        out = np.zeros((image.height, image.width, 3), 'float32')
     
     for y in range(1, image.height-1):
         for x in range(1, image.width-1):
-            conv_pixel(image, x, y, matrix, out, flag_y)
+            conv_pixel(image, x, y, matrix, out, flag_y, offset)
     
     return out
