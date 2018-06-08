@@ -95,28 +95,15 @@ def plot(d):
     
 
 if __name__ == "__main__":
-    #if len(sys.argv) < 3:
-        #print("USAGE: python dct.py filename N")
+    if len(sys.argv) < 3:
+        print("USAGE: python dct.py filename N")
 
     filename = sys.argv[1]
     img = cv2.imread(filename, 0)
     d = dct2d(img)
     
     n = int(sys.argv[2])
-    #x = get_nmax(d, n)
-    x = inverse_dct2d(d)
-    #Image.fromarray(x).show()
-    cv2.imshow('result', x)
-    cv2.waitKey(0)
-    cv2.destroyWindow('result')
-    cv2.waitKey(1)
-
-    '''for i in range(len(d)):
-        if d[i] != max(d):
-            d[i][:] = np.zeros_like(d).tolist()[i]'''
-
-    #d = dct_graph(d)
-    #cv2.imshow('result', d)
-
-    #plt.plot(np.linspace(0,256, d.shape[0]),d)
-    #plt.show()
+    x = get_nmax(d, n)
+    x = inverse_dct2d(x)
+    Image.fromarray(x).show()
+    
