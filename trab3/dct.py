@@ -95,6 +95,7 @@ def plot(d):
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("USAGE: python dct.py filename N")
+        sys.exit(1)
 
     filename = sys.argv[1]
     img = cv2.imread(filename)
