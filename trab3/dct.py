@@ -74,6 +74,7 @@ def dct_graph(cosines):
 def get_nmax(y, n):
     d = y.copy()
     d[n:] = 0
+    d[:,n:] = 0
 
     return d
 
