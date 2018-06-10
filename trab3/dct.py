@@ -11,9 +11,8 @@ def dct(row):
     factor = pi / N
     
     for i in range(N):
-#        sum = row[0] / sqrt(2)
         sum = 0.0
-        for j in range(1,N):
+        for j in range(N):
             sum += row[j] * cos((j + 0.5) * i * factor)
         result.append(sum * sqrt(2 / N))
 
@@ -71,22 +70,12 @@ def dct_graph(cosines):
 
     return np.array(result)
 
-def get_nmax(y, n):
+def get_n_cosines(y, n):
     d = y.copy()
     d[n:] = 0
     d[:,n:] = 0
 
     return d
-
-def n_largest(y, n):
-    aux = y.tolist()
-    result = []
-
-    for i in range(n):
-        result.append(max(aux))
-        aux.remove(max(aux))
-
-    return result
 
 def plot(d):
     plt.plot(np.linspace(0,256,d.shape[0]),d)
@@ -102,7 +91,7 @@ if __name__ == "__main__":
     d = dct2d(img)
     
     n = int(sys.argv[2])
-    x = get_nmax(d, n)
+    x = get_n_cosines(d, n)
     x = inverse_dct2d(x)
     x = np.array(x).astype('uint8')
     x = x[:,:,::-1]
