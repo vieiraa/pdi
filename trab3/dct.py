@@ -73,9 +73,7 @@ def dct_graph(cosines):
 
 def get_nmax(y, n):
     d = y.copy()
-    for i in range(len(y)):
-        if i not in range(n):
-            d[i][:] = np.zeros_like(d).tolist()[i]
+    d[n:] = 0
 
     return d
 
@@ -93,17 +91,18 @@ def plot(d):
     plt.plot(np.linspace(0,256,d.shape[0]),d)
     plt.show()
     
-
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("USAGE: python dct.py filename N")
 
     filename = sys.argv[1]
-    img = cv2.imread(filename, 0)
+    img = cv2.imread(filename)
     d = dct2d(img)
     
     n = int(sys.argv[2])
     x = get_nmax(d, n)
     x = inverse_dct2d(x)
+    x = np.array(x).astype('uint8')
+    x = x[:,:,::-1]
     Image.fromarray(x).show()
     
