@@ -72,13 +72,18 @@ def dct_graph(cosines):
 
 def get_n_cosines(y, n):
     d = y.copy()
-    d[n:] = 0
-    d[:,n:] = 0
-
-    return d
+    aux = np.zeros_like(d)
+    d = sorted(d.ravel(), key=abs)
+    d = d[::-1]
+    for i in range(n):
+        x = np.where(d[i] == y)
+        aux[x[0][0], x[1][0]] = d[i]
+            
+    return aux
 
 def plot(d):
-    plt.plot(np.linspace(0,256,d.shape[0]),d)
+    x = dct_graph(d)
+    plt.plot(np.linspace(0,256,x.shape[0]),x)
     plt.show()
     
 if __name__ == "__main__":
@@ -88,11 +93,20 @@ if __name__ == "__main__":
 
     filename = sys.argv[1]
     img = cv2.imread(filename)
-    d = dct2d(img)
-    
     n = int(sys.argv[2])
-    x = get_n_cosines(d, n)
-    x = inverse_dct2d(x)
+    b,g,r = cv2.split(img)
+    b = dct2d(b)
+    g = dct2d(g)
+    r = dct2d(r)
+
+    b = get_n_cosines(b, n)
+    g = get_n_cosines(g, n)
+    r = get_n_cosines(r, n)
+    b = inverse_dct2d(b)
+    g = inverse_dct2d(g)
+    r = inverse_dct2d(r)
+    x = cv2.merge((b,g,r))
+    
     x = np.array(x).astype('uint8')
     x = x[:,:,::-1]
     Image.fromarray(x).show()
